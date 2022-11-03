@@ -64,7 +64,10 @@ export const percolation = (n: number) => {
     return UF.connected(virtualTop, virtualBottom)
   }
 
-  const getGrid = () => {
-    return grid
-  }
+  return (
+    <div>
+      
+    </div>
+  )
+
 }

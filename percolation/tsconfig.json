@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "noImplicitAny": false
-  }
-  //"strict": true
+  },
+  //"strict": true.
+  "jsx": "react"
 }
