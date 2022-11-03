@@ -1,13 +1,19 @@
+const express = require('express')
+const app = express()
+const cors = require('cors')
 const { Percolation } = require('./classes/Percolation')
 
-const p = new Percolation(5)
+app.use(cors())
+app.use(express.json())
 
-console.log('percolates?', p.percolates(4, 0))
-p.open(4,0)
-p.open(3,0)
-p.open(2,0)
-p.open(1,0)
-console.log('percolates?', p.percolates(4, 0))
-p.open(0,0)
+app.post('/', (req, res) => {
+  const value = Number(req.body.value)
+  console.log(value)
+  res.send(new Percolation(value))
+})
 
-console.log('percolates?', p.percolates(4, 0))
+app.get('/', (req, res) => {
+  res.send(new Percolation(5))
+})
+
+app.listen(3001)
