@@ -1,13 +1,13 @@
-import { Container } from './components/styled/Container.js'
 import { Percolation } from './algorithms/Percolation.tsx'
+import styles from './App.module.css'
 
 const App = () => {
   console.log('render app')
-  const num = 5
+  const num = 50
   const grid = []
   const parent = []
   const size = []
-  const n = num * num + 2 
+  const n = num * num + 2
 
   for (let i = 0; i < num; i++) {
     grid[i] = []
@@ -22,9 +22,9 @@ const App = () => {
   }
 
   return (
-    <Container>
+    <div className={styles.container}>
       <Percolation data={{ grid, parent, size, n, num }} />
-    </Container>
+    </div>
   )
 }
 

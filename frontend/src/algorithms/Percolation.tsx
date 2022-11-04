@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Grid } from '../components/styled/Grid'
-import { Node } from '../components/styled/Node'
+import './Percolation.css'
 
 export const Percolation = (props) => {
   const [grid, setGrid] = useState(props.data.grid)
@@ -107,42 +106,44 @@ export const Percolation = (props) => {
     open(row, column)
   }
 
+  const nodeSize = 400 / props.data.num
+
   const render = () => {
     return grid.map((row, rowIndex) => {
       return row.map((node, nodeIndex) => {
         if (!node) {
           return (
-            <Node
-              backgroundColor="orange"
+            <div
+              style={{ width: `${nodeSize}px`, height: `${nodeSize}px` }}
+              className={`node`}
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
-            >
-            </Node>
+            ></div>
           )
         }
         if (isFull(rowIndex, nodeIndex)) {
           return (
-            <Node
-              backgroundColor="grey"
+            <div
+              style={{ width: nodeSize, height: nodeSize }}
+              className={'node full'}
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
-            >
-            </Node>
+            ></div>
           )
         }
         if (node) {
           return (
-            <Node
-              backgroundColor="red"
+            <div
+              style={{ width: nodeSize, height: nodeSize }}
+              className={'node connected'}
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
-            >
-            </Node>
+            ></div>
           )
         }
       })
     })
   }
 
-  return <Grid>{render()}</Grid>
+  return <div className="flex">{render()}</div>
 }

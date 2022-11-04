@@ -1,0 +1,26 @@
+.node {
+  border: 1px solid rgb(221, 221, 221);
+  background: ghostwhite;
+  display: inline-block;
+}
+
+.flex {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  margin: 0 auto;
+}
+
+.open {
+  background: red;
+}
+
+.connected {
+  background: orange;
+}
+
+.full {
+  background: yellowgreen;
+}
