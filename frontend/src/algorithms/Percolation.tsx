@@ -6,12 +6,10 @@ export const Percolation = (props) => {
   const [grid, setGrid] = useState(props.data.grid)
   const [parent, setParent] = useState(props.data.parent)
   const [size, setSize] = useState(props.data.size)
-  const n = props.data.n
+  const n = props.data.num
   const [count, setCount] = useState(n * n)
   const virtualTop = n * n
   const virtualBottom = n * n + 1
-
-  console.log(grid)
 
   // Transforms 2-dimensional array to single dimension based on index
   const transform = (row: number, column: number) => {
@@ -23,26 +21,7 @@ export const Percolation = (props) => {
   const open = (row: number, column: number) => {
     const newGrid = grid.slice()
     newGrid[row][column] = true
-    /*
-    const newState = grid.map((first, rowIndex) => {
-      first.map((second, columnIndex) => {
-        if (rowIndex === row && columnIndex === column) {
-          return (second = true)
-        } else {
-          console.log(second)
-          second = true
-        }
-      })
-    })
 
-    */
-    /*
-    const array5 = Array(5).fill(false)
-    const newArr = Array(5)
-      .fill(false)
-      .map(() => array5.slice())
-
-      */
     setGrid(newGrid)
 
     if (row === 0) {
@@ -86,6 +65,8 @@ export const Percolation = (props) => {
   }
 
   const connected = (p: number, q: number) => {
+    console.log('connected:', p, q)
+    console.log('connected?', find(p) === find(q))
     return find(p) === find(q)
   }
 
@@ -105,6 +86,7 @@ export const Percolation = (props) => {
   }
 
   const union = (p: number, q: number) => {
+    console.log('union:', p, q)
     const rootP = find(p)
     const rootQ = find(q)
     if (rootP === rootQ) return
@@ -121,13 +103,35 @@ export const Percolation = (props) => {
   }
 
   const handleClick = (row, column) => {
-    console.log('click:', grid)
+    console.log('handle click!')
     open(row, column)
   }
 
   const render = () => {
     return grid.map((row, rowIndex) => {
       return row.map((node, nodeIndex) => {
+        if (!node) {
+          return (
+            <Node
+              backgroundColor="orange"
+              key={nodeIndex}
+              onClick={() => handleClick(rowIndex, nodeIndex)}
+            >
+              connected
+            </Node>
+          )
+        }
+        if (isFull(rowIndex, nodeIndex)) {
+          return (
+            <Node
+              backgroundColor="grey"
+              key={nodeIndex}
+              onClick={() => handleClick(rowIndex, nodeIndex)}
+            >
+              connected
+            </Node>
+          )
+        }
         if (node) {
           return (
             <Node
@@ -136,26 +140,6 @@ export const Percolation = (props) => {
               onClick={() => handleClick(rowIndex, nodeIndex)}
             >
               connected
-            </Node>
-          )
-        } else if (!node) {
-          return (
-            <Node
-              backgroundColor="orange"
-              key={nodeIndex}
-              onClick={() => handleClick(rowIndex, nodeIndex)}
-            >
-              not connected
-            </Node>
-          )
-        } else {
-          return (
-            <Node
-              backgroundColor="yellow"
-              key={nodeIndex}
-              onClick={() => handleClick(rowIndex, nodeIndex)}
-            >
-              not connected
             </Node>
           )
         }
