@@ -4,9 +4,10 @@ Also original specification of the to be done implementation of the algorithm on
 
 I have implemented the algorithm to handle the percolation problem with JS/Typescript and refactored it into functional components for the front-end. Current working version is at: https://playful-tiramisu-4ad60b.netlify.app/
 
-## To Do 4.11.2022
+## To Do 
 
 - Monte Carlo simulation, never done one before so should be interesting trip. 
 - Visualizations on the data from the simulations
 - more interactive front-end that accepts user inputs to for example choose the size of the grid or parameters for the simulation
 - Minesweeper game or something similar forked from this?
+- Could it be possible to easily add the feature of showing different connected nodegroups by different colors.
