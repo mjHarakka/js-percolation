@@ -1,27 +1,17 @@
+import { useEffect, useState } from 'react'
 import { Grid } from '../components/styled/Grid'
 import { Node } from '../components/styled/Node'
 
-export const Percolation = () => {
-  const grid = []
-  const n = 5
+export const Percolation = (props) => {
+  const [grid, setGrid] = useState(props.data.grid)
+  const [parent, setParent] = useState(props.data.parent)
+  const [size, setSize] = useState(props.data.size)
+  const n = props.data.n
+  const [count, setCount] = useState(n * n)
   const virtualTop = n * n
   const virtualBottom = n * n + 1
 
-  for (let i = 0; i < n; i++) {
-    grid[i] = []
-    for (let j = 0; j < n; j++) {
-      grid[i][j] = false
-    }
-  }
-
-  let count = n * n
-  const parent = new Array<number>()
-  const size = new Array<number>()
-
-  for (let i = 0; i < n; i++) {
-    parent[i] = i
-    size[i] = 1
-  }
+  console.log(grid)
 
   // Transforms 2-dimensional array to single dimension based on index
   const transform = (row: number, column: number) => {
@@ -31,10 +21,31 @@ export const Percolation = () => {
   }
 
   const open = (row: number, column: number) => {
-    grid[row][column] = true
+    const newGrid = grid.slice()
+    newGrid[row][column] = true
+    /*
+    const newState = grid.map((first, rowIndex) => {
+      first.map((second, columnIndex) => {
+        if (rowIndex === row && columnIndex === column) {
+          return (second = true)
+        } else {
+          console.log(second)
+          second = true
+        }
+      })
+    })
+
+    */
+    /*
+    const array5 = Array(5).fill(false)
+    const newArr = Array(5)
+      .fill(false)
+      .map(() => array5.slice())
+
+      */
+    setGrid(newGrid)
 
     if (row === 0) {
-      console.log(row, column)
       union(transform(row, column), virtualTop)
     }
 
@@ -74,13 +85,8 @@ export const Percolation = () => {
     return connected(virtualTop, virtualBottom)
   }
 
-  const handleClick = (a, b) => {
-    console.log('clicked')
-    open(a, b)
-  }
-
   const connected = (p: number, q: number) => {
-    return find(p) == find(q)
+    return find(p) === find(q)
   }
 
   const validate = (p: number) => {
@@ -92,61 +98,70 @@ export const Percolation = () => {
 
   const find = (p: number) => {
     validate(p)
-    while (p != parent[p]) {
+    while (p !== parent[p]) {
       p = parent[p]
     }
     return p
   }
 
   const union = (p: number, q: number) => {
-    let rootP = find(p)
-    let rootQ = find(q)
-    if (rootP == rootQ) return
+    const rootP = find(p)
+    const rootQ = find(q)
+    if (rootP === rootQ) return
 
     // make smaller root point to larger one
-    if ([rootP].length < [rootQ].length) {
+    if (size[rootP] < size[rootQ]) {
       parent[rootP] = rootQ
-      ;[rootQ].length += [rootP].length
+      size[rootQ] += size[rootP]
     } else {
       parent[rootQ] = rootP
-      ;[rootP].length += [rootQ].length
+      size[rootP] += size[rootQ]
     }
-    count--
+    setCount(count - 1)
   }
 
-  return (
-    <div>
-      <Grid>
-        {grid.map((row, rowIndex) => {
-          return row.map((node, nodeIndex) => {
-            if (node) {
-              return (
-                <Node
-                  backgroundColor="red"
-                  key={nodeIndex}
-                  onClick={() => handleClick(rowIndex, nodeIndex)}
-                ></Node>
-              )
-            } else if (isFull(rowIndex, nodeIndex)) {
-              return (
-                <Node
-                  backgroundColor="orange"
-                  key={nodeIndex}
-                  onClick={() => handleClick(rowIndex, nodeIndex)}
-                ></Node>
-              )
-            } else {
-              return (
-                <Node
-                  backgroundColor="yellow"
-                  key={nodeIndex}
-                  onClick={() => handleClick(rowIndex, nodeIndex)}
-                ></Node>
-              )
-            }
-          })
-        })}
-      </Grid>
-    </div>
-  )
+  const handleClick = (row, column) => {
+    console.log('click:', grid)
+    open(row, column)
+  }
+
+  const render = () => {
+    return grid.map((row, rowIndex) => {
+      return row.map((node, nodeIndex) => {
+        if (node) {
+          return (
+            <Node
+              backgroundColor="red"
+              key={nodeIndex}
+              onClick={() => handleClick(rowIndex, nodeIndex)}
+            >
+              connected
+            </Node>
+          )
+        } else if (!node) {
+          return (
+            <Node
+              backgroundColor="orange"
+              key={nodeIndex}
+              onClick={() => handleClick(rowIndex, nodeIndex)}
+            >
+              not connected
+            </Node>
+          )
+        } else {
+          return (
+            <Node
+              backgroundColor="yellow"
+              key={nodeIndex}
+              onClick={() => handleClick(rowIndex, nodeIndex)}
+            >
+              not connected
+            </Node>
+          )
+        }
+      })
+    })
+  }
+
+  return <Grid>{render()}</Grid>
 }
