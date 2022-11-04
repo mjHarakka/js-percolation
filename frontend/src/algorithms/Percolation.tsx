@@ -117,7 +117,6 @@ export const Percolation = (props) => {
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
             >
-              connected
             </Node>
           )
         }
@@ -128,7 +127,6 @@ export const Percolation = (props) => {
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
             >
-              connected
             </Node>
           )
         }
@@ -139,7 +137,6 @@ export const Percolation = (props) => {
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
             >
-              connected
             </Node>
           )
         }
