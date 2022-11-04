@@ -1,9 +1,13 @@
 import { Percolation } from './algorithms/Percolation.tsx'
-import styles from './App.module.css'
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import Navbar from './components/Navbar'
+import './App.css'
 
 const App = () => {
   console.log('render app')
-  const num = 50
+  const num = 20
   const grid = []
   const parent = []
   const size = []
@@ -22,9 +26,14 @@ const App = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <Percolation data={{ grid, parent, size, n, num }} />
-    </div>
+    <>
+      <Navbar></Navbar>
+      <Container maxWidth='sm'>
+        <Box sx={{ display: 'flex' }}>
+          <Percolation data={{ grid, parent, size, n, num }} />
+        </Box>
+      </Container>
+    </>
   )
 }
 
