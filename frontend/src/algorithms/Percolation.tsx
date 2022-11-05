@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './Percolation.css'
 import { Box } from '@mui/system'
+import { WeightedQuickUnionUF } from './weightedquickuf'
 
 export const Percolation = (props) => {
   const [grid, setGrid] = useState(props.data.grid)
@@ -10,6 +11,7 @@ export const Percolation = (props) => {
   const [count, setCount] = useState(n * n)
   const virtualTop = n * n
   const virtualBottom = n * n + 1
+  const UF = new WeightedQuickUnionUF(props.data.num)
 
   // Transforms 2-dimensional array to single dimension based on index
   const transform = (row: number, column: number) => {
@@ -107,7 +109,8 @@ export const Percolation = (props) => {
     open(row, column)
   }
 
-  const nodeSize = `${350 / props.data.num}px`
+  const nodeSize = `${1000 / props.data.num}px`
+  const uf = new WeightedQuickUnionUF(5)
 
   const render = () => {
     return grid.map((row, rowIndex) => {

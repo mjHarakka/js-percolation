@@ -5,7 +5,8 @@
 }
 
 .flex {
-  width: 400px;
+  padding: 40px 0;
+  width: 1000px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

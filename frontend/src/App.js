@@ -7,7 +7,7 @@ import './App.css'
 
 const App = () => {
   console.log('render app')
-  const num = 20
+  const num = 20 
   const grid = []
   const parent = []
   const size = []
@@ -28,7 +28,7 @@ const App = () => {
   return (
     <>
       <Navbar></Navbar>
-      <Container maxWidth='sm'>
+      <Container maxWidth='lg'>
         <Box sx={{ display: 'flex' }}>
           <Percolation data={{ grid, parent, size, n, num }} />
         </Box>

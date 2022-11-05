@@ -17,9 +17,6 @@ const Navbar = () => {
           JS-PERCOLATION
         </Typography>
         <Stack direction='row' spacing={2}>
-          <Button color='inherit'>About</Button>
-          <Button color='inherit'>Other links</Button>
-          <Button color='inherit'>My github</Button>
         </Stack>
       </Toolbar>
     </AppBar>
