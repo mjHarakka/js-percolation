@@ -5,13 +5,11 @@ import { WeightedQuickUnionUF } from './weightedquickuf'
 
 export const Percolation = (props) => {
   const [grid, setGrid] = useState(props.data.grid)
-  const [parent, setParent] = useState(props.data.parent)
-  const [size, setSize] = useState(props.data.size)
   const n = props.data.num
-  const [count, setCount] = useState(n * n)
   const virtualTop = n * n
   const virtualBottom = n * n + 1
-  const UF = new WeightedQuickUnionUF(props.data.num)
+  console.log(props.data.num)
+  const [UF, setUF] = useState(new WeightedQuickUnionUF(props.data.num))
 
   // Transforms 2-dimensional array to single dimension based on index
   const transform = (row: number, column: number) => {
@@ -20,6 +18,7 @@ export const Percolation = (props) => {
     return row * length + column
   }
 
+  // Open a new site and and if there is a vertical or diagonal neighbour, connect
   const open = (row: number, column: number) => {
     const newGrid = grid.slice()
     newGrid[row][column] = true
@@ -27,81 +26,43 @@ export const Percolation = (props) => {
     setGrid(newGrid)
 
     if (row === 0) {
-      union(transform(row, column), virtualTop)
+      UF.union(transform(row, column), virtualTop)
     }
 
     if (row === grid.length - 1) {
-      union(transform(row, column), virtualBottom)
+      UF.union(transform(row, column), virtualBottom)
     }
 
     if (row === 0) {
       if (grid[row + 1][column]) {
-        union(transform(row + 1, column), transform(row, column))
+        UF.union(transform(row + 1, column), transform(row, column))
       }
     } else if (row === grid.length - 1) {
       if (grid[row - 1][column]) {
-        union(transform(row - 1, column), transform(row, column))
+        UF.union(transform(row - 1, column), transform(row, column))
       }
     } else if (row > 0 && row < grid.length - 1) {
       if (grid[row + 1][column]) {
-        union(transform(row + 1, column), transform(row, column))
+        UF.union(transform(row + 1, column), transform(row, column))
       }
       if (grid[row - 1][column]) {
-        union(transform(row - 1, column), transform(row, column))
+        UF.union(transform(row - 1, column), transform(row, column))
       }
       if (grid[row][column + 1]) {
-        union(transform(row, column + 1), transform(row, column))
+        UF.union(transform(row, column + 1), transform(row, column))
       }
       if (grid[row][column - 1]) {
-        union(transform(row, column - 1), transform(row, column))
+        UF.union(transform(row, column - 1), transform(row, column))
       }
     }
   }
 
   const isFull = (row: number, column: number) => {
-    return connected(transform(row, column), virtualTop)
+    return UF.connected(transform(row, column), virtualTop)
   }
 
   const percolates = () => {
-    return connected(virtualTop, virtualBottom)
-  }
-
-  const connected = (p: number, q: number) => {
-    console.log('connected:', p, q)
-    console.log('connected?', find(p) === find(q))
-    return find(p) === find(q)
-  }
-
-  const validate = (p: number) => {
-    const j = n * n + 2
-    if (p < 0 || p >= j) {
-      throw new Error('index ' + p + ' is not between 0 and ' + (j - 1))
-    }
-  }
-
-  const find = (p: number) => {
-    validate(p)
-    while (p !== parent[p]) {
-      p = parent[p]
-    }
-    return p
-  }
-
-  const union = (p: number, q: number) => {
-    console.log('union:', p, q)
-    const rootP = find(p)
-    const rootQ = find(q)
-    if (rootP === rootQ) return
-
-    // make smaller root point to larger one
-    if (size[rootP] < size[rootQ]) {
-      parent[rootP] = rootQ
-      size[rootQ] += size[rootP]
-    } else {
-      parent[rootQ] = rootP
-      size[rootP] += size[rootQ]
-    }
-    setCount(count - 1)
+    return UF.connected(virtualTop, virtualBottom)
   }
 
   const handleClick = (row, column) => {
@@ -147,5 +108,5 @@ export const Percolation = (props) => {
     })
   }
 
-  return <div className="flex">{render()}</div>
+  return <div className='flex'>{render()}</div>
 }
