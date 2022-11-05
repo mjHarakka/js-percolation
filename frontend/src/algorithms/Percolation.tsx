@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import './Percolation.css'
-import { Box } from '@mui/system'
 
 export const Percolation = (props) => {
   const [grid, setGrid] = useState(props.data.grid)
@@ -107,44 +106,42 @@ export const Percolation = (props) => {
     open(row, column)
   }
 
-  const nodeSize = `${350 / props.data.num}px`
+  const nodeSize = 350 / props.data.num
 
   const render = () => {
     return grid.map((row, rowIndex) => {
       return row.map((node, nodeIndex) => {
         if (!node) {
           return (
-            <Box
-              style={{ width: `${nodeSize}`, height: `${nodeSize}` }}
-              className={`node`}
-              key={nodeIndex}
-              onClick={() => handleClick(rowIndex, nodeIndex)}
-            ></Box>
-          )
-        }
-        if (isFull(rowIndex, nodeIndex)) {
-          return (
-            <Box
-              style={{ width: `${nodeSize}`, height: `${nodeSize}` }}
-              className={'node full'}
-              key={nodeIndex}
-              onClick={() => handleClick(rowIndex, nodeIndex)}
-            ></Box>
-          )
-        }
-        if (node) {
-          return (
             <div
-              style={{ width: `${nodeSize}`, height: `${nodeSize}` }}
-              className={'node connected'}
+              style={{ width: `${nodeSize}px`, height: `${nodeSize}px` }}
+              className={`node`}
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
             ></div>
           )
         }
+        if (isFull(rowIndex, nodeIndex)) {
+          return (
+            <div
+              style={{ width: nodeSize, height: nodeSize }}
+              className={'node full'}
+              key={nodeIndex}
+              onClick={() => handleClick(rowIndex, nodeIndex)}
+            ></div>
+          )
+        }
+        return (
+          <div
+            style={{ width: nodeSize, height: nodeSize }}
+            className={'node connected'}
+            key={nodeIndex}
+            onClick={() => handleClick(rowIndex, nodeIndex)}
+          ></div>
+        )
       })
     })
   }
 
-  return <div className='flex'>{render()}</div>
+  return <div className="flex">{render()}</div>
 }
