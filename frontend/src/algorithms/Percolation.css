@@ -5,13 +5,8 @@
 }
 
 .flex {
-<<<<<<< HEAD
   padding: 40px 0;
   width: 1000px;
-=======
-  padding: 20px;
-  width: 400px;
->>>>>>> 608646f723bc37203fddadd73ae8495a7932eb44
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
