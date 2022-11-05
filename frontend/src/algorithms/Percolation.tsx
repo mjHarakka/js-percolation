@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
 import './Percolation.css'
+<<<<<<< HEAD
 import { Box } from '@mui/system'
 import { WeightedQuickUnionUF } from './weightedquickuf'
+=======
+>>>>>>> 608646f723bc37203fddadd73ae8495a7932eb44
 
 export const Percolation = (props) => {
   const [grid, setGrid] = useState(props.data.grid)
@@ -109,45 +112,47 @@ export const Percolation = (props) => {
     open(row, column)
   }
 
+<<<<<<< HEAD
   const nodeSize = `${1000 / props.data.num}px`
   const uf = new WeightedQuickUnionUF(5)
+=======
+  const nodeSize = 350 / props.data.num
+>>>>>>> 608646f723bc37203fddadd73ae8495a7932eb44
 
   const render = () => {
     return grid.map((row, rowIndex) => {
       return row.map((node, nodeIndex) => {
         if (!node) {
           return (
-            <Box
-              style={{ width: `${nodeSize}`, height: `${nodeSize}` }}
-              className={`node`}
-              key={nodeIndex}
-              onClick={() => handleClick(rowIndex, nodeIndex)}
-            ></Box>
-          )
-        }
-        if (isFull(rowIndex, nodeIndex)) {
-          return (
-            <Box
-              style={{ width: `${nodeSize}`, height: `${nodeSize}` }}
-              className={'node full'}
-              key={nodeIndex}
-              onClick={() => handleClick(rowIndex, nodeIndex)}
-            ></Box>
-          )
-        }
-        if (node) {
-          return (
             <div
-              style={{ width: `${nodeSize}`, height: `${nodeSize}` }}
-              className={'node connected'}
+              style={{ width: `${nodeSize}px`, height: `${nodeSize}px` }}
+              className={`node`}
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
             ></div>
           )
         }
+        if (isFull(rowIndex, nodeIndex)) {
+          return (
+            <div
+              style={{ width: nodeSize, height: nodeSize }}
+              className={'node full'}
+              key={nodeIndex}
+              onClick={() => handleClick(rowIndex, nodeIndex)}
+            ></div>
+          )
+        }
+        return (
+          <div
+            style={{ width: nodeSize, height: nodeSize }}
+            className={'node connected'}
+            key={nodeIndex}
+            onClick={() => handleClick(rowIndex, nodeIndex)}
+          ></div>
+        )
       })
     })
   }
 
-  return <div className='flex'>{render()}</div>
+  return <div className="flex">{render()}</div>
 }

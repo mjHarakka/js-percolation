@@ -1,11 +1,8 @@
-import { Percolation } from './algorithms/Percolation.tsx'
 import CssBaseline from '@mui/material/CssBaseline'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Navbar from './components/Navbar'
-import './App.css'
+import DrawerComponent from './components/Drawer/Drawer'
 
 const App = () => {
+<<<<<<< HEAD
   console.log('render app')
   const num = 20 
   const grid = []
@@ -33,6 +30,13 @@ const App = () => {
           <Percolation data={{ grid, parent, size, n, num }} />
         </Box>
       </Container>
+=======
+  return (
+    <>
+      <CssBaseline />
+
+      <DrawerComponent />
+>>>>>>> 608646f723bc37203fddadd73ae8495a7932eb44
     </>
   )
 }
