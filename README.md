@@ -6,7 +6,7 @@ I have implemented the algorithm to handle the percolation problem with JS/Types
 
 ## To Do 
 
-- Monte Carlo simulation, never done one before so should be interesting trip. 
+- Simulation, never done one before so should be interesting trip. 
 - Visualizations on the data from the simulations
 - more interactive front-end that accepts user inputs to for example choose the size of the grid or parameters for the simulation
 - Minesweeper game or something similar forked from this?
