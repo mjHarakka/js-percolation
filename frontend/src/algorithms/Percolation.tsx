@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './Percolation.css'
-import { Box } from '@mui/system'
 import { WeightedQuickUnionUF } from './weightedquickuf'
 
 export const Percolation = (props) => {
@@ -71,7 +70,6 @@ export const Percolation = (props) => {
   }
 
   const nodeSize = 1000 / props.data.num
-  const uf = new WeightedQuickUnionUF(5)
 
   const render = () => {
     return grid.map((row, rowIndex) => {
@@ -108,5 +106,5 @@ export const Percolation = (props) => {
     })
   }
 
-  return <div className='flex'>{render()}</div>
+  return <div className="flex">{render()}</div>
 }

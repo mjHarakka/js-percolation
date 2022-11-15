@@ -21,13 +21,19 @@ const Visualizer = () => {
     size[i] = 1
   }
 
+  const runSimulation = () => {
+    console.log('clicked simulation')
+  }
+
   return (
     <>
       <Stack spacing={2} direction="row">
-        <Button variant="contained">Simulate</Button>
+        <Button variant="contained" onClick={() => runSimulation()}>
+          Simulate
+        </Button>
         <Button variant="contained">Reset grid</Button>
       </Stack>
-      <Percolation data={{ grid, parent, size, n, num }} />
+      <Percolation data={{ grid, parent, size, n, num }}></Percolation>
     </>
   )
 }
