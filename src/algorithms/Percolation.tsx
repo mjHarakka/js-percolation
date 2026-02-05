@@ -17,7 +17,7 @@ export const Percolation = (props: PercolationProps) => {
   const n = props.data.num
   const virtualTop = n * n
   const virtualBottom = n * n + 1
-  const [UF, setUF] = useState(new WeightedQuickUnionUF(props.data.num))
+  const [UF] = useState(new WeightedQuickUnionUF(props.data.num))
 
   // Expose open function to parent component
   useEffect(() => {
@@ -27,6 +27,7 @@ export const Percolation = (props: PercolationProps) => {
     if (props.onPercolationCheck) {
       props.onPercolationCheck(percolates)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onOpenSite, props.onPercolationCheck])
 
   // Transforms 2-dimensional array to single dimension based on index
