@@ -1,7 +1,6 @@
 .node {
   background: #e8eaf6;
   cursor: pointer;
-  transition: all 0.2s ease;
   border: 1px solid rgba(102, 126, 234, 0.2);
   aspect-ratio: 1;
   width: 100%;
@@ -10,6 +9,10 @@
 
 .node:hover {
   border-color: rgba(102, 126, 234, 0.4);
+}
+
+.percolating .node {
+  transition: none;
 }
 
 .flex {
@@ -40,6 +43,11 @@
 .full {
   background: #66bb6a;
   border-color: #388e3c;
+}
+
+.percolating .full {
+  background: #e53935;
+  border-color: #b71c1c;
 }
 
 .percolated {

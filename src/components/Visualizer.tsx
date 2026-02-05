@@ -19,7 +19,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import './Visualizer.css'
 
 const Visualizer = () => {
-  const gridSize = 100
+  const [gridSize, setGridSize] = useState(100)
 
   const initializeGrid = (size: number) => {
     const grid = []
@@ -69,7 +69,11 @@ const Visualizer = () => {
       setResetKey((prev) => prev + 1)
       setOpenCount(0)
 
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      // Slow down simulation as mean approaches 0.5
+      const currentMean = meanThreshold
+      const delayBetweenTrials = currentMean >= 0.5 ? 500 : 100
+
+      await new Promise((resolve) => setTimeout(resolve, delayBetweenTrials))
 
       // Get all possible sites
       const sites: [number, number][] = []
@@ -163,6 +167,18 @@ const Visualizer = () => {
     thresholds.current = []
   }
 
+  const changeGridSize = (size: number) => {
+    if (isSimulating) return
+    setGridSize(size)
+    setGrid(initializeGrid(size))
+    setResetKey((prev) => prev + 1)
+    setOpenCount(0)
+    setTrials(0)
+    setMeanThreshold(0)
+    setStddev(0)
+    thresholds.current = []
+  }
+
   return (
     <Box className='visualizer-container'>
       <Card className='control-card' elevation={8}>
@@ -184,26 +200,15 @@ const Visualizer = () => {
 
           <Stack spacing={2} direction='row' className='button-group'>
             {!isSimulating ? (
-              <>
-                <Button
-                  variant='contained'
-                  size='large'
-                  startIcon={<PlayArrowIcon />}
-                  onClick={() => runSimulation()}
-                  className='simulate-btn'
-                >
-                  Simulate
-                </Button>
-                <Button
-                  variant='outlined'
-                  size='large'
-                  startIcon={<RefreshIcon />}
-                  onClick={resetGrid}
-                  className='reset-btn'
-                >
-                  Reset Grid
-                </Button>
-              </>
+              <Button
+                variant='contained'
+                size='large'
+                startIcon={<PlayArrowIcon />}
+                onClick={() => runSimulation()}
+                className='simulate-btn'
+              >
+                Simulate
+              </Button>
             ) : (
               <Button
                 variant='contained'

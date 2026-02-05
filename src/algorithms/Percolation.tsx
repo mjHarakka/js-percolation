@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import './Percolation.css'
 import { WeightedQuickUnionUF } from './weightedquickuf'
 
@@ -89,6 +89,19 @@ export const Percolation = (props: PercolationProps) => {
 
   const isPercolating = percolates()
 
+  // Memoize full cells calculation to avoid repeated UF queries during render
+  const fullCells = useMemo(() => {
+    const cells = new Set<string>()
+    for (let row = 0; row < grid.length; row++) {
+      for (let col = 0; col < grid[row].length; col++) {
+        if (grid[row][col] && isFull(row, col)) {
+          cells.add(`${row},${col}`)
+        }
+      }
+    }
+    return cells
+  }, [grid])
+
   const render = () => {
     return grid.map((row, rowIndex) => {
       return row.map((node, nodeIndex) => {
@@ -101,18 +114,10 @@ export const Percolation = (props: PercolationProps) => {
             ></div>
           )
         }
-        if (isFull(rowIndex, nodeIndex)) {
-          return (
-            <div
-              className={isPercolating ? 'node percolated' : 'node full'}
-              key={nodeIndex}
-              onClick={() => handleClick(rowIndex, nodeIndex)}
-            ></div>
-          )
-        }
+        const isFull = fullCells.has(`${rowIndex},${nodeIndex}`)
         return (
           <div
-            className={'node connected'}
+            className={isFull ? 'node full' : 'node connected'}
             key={nodeIndex}
             onClick={() => handleClick(rowIndex, nodeIndex)}
           ></div>
@@ -122,7 +127,10 @@ export const Percolation = (props: PercolationProps) => {
   }
 
   return (
-    <div className='flex' style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
+    <div
+      className={isPercolating ? 'flex percolating' : 'flex'}
+      style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}
+    >
       {render()}
     </div>
   )
