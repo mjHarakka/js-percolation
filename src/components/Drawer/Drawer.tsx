@@ -13,7 +13,6 @@ import ListItemText from '@mui/material/ListItemText'
 import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import Visualizer from '../Visualizer'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import InfoIcon from '@mui/icons-material/Info'
 import { useNavigate } from 'react-router-dom'
@@ -22,8 +21,13 @@ import { drawerStyles } from './styles'
 
 const drawerWidth = 240
 
-const DrawerComponent = (props) => {
-  const { window } = props
+interface DrawerComponentProps {
+  window?: () => Window
+  children?: React.ReactNode
+}
+
+const DrawerComponent = (props: DrawerComponentProps) => {
+  const { window, children } = props
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const navigate = useNavigate()
 
@@ -41,9 +45,9 @@ const DrawerComponent = (props) => {
               <ListItemText primary={item.label} />
             </ListItem>
           ) : (
-            <a key={item.id} href="https://github.com/mjHarakka/js-percolation">
+            <a key={item.id} href='https://github.com/mjHarakka/js-percolation'>
               <ListItem
-                href="https://github.com/mjHarakka/js-percolation"
+                href='https://github.com/mjHarakka/js-percolation'
                 button
                 key={item.id}
                 onClick={() => navigate(item.route)}
@@ -66,7 +70,7 @@ const DrawerComponent = (props) => {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position='fixed'
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
@@ -74,28 +78,28 @@ const DrawerComponent = (props) => {
       >
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
+            color='inherit'
+            aria-label='open drawer'
+            edge='start'
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant='h6' noWrap component='div'>
             JS-Percolation
           </Typography>
         </Toolbar>
       </AppBar>
       <Box
-        component="nav"
+        component='nav'
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
+        aria-label='mailbox folders'
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
-          variant="temporary"
+          variant='temporary'
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
@@ -112,7 +116,7 @@ const DrawerComponent = (props) => {
           {drawer}
         </Drawer>
         <Drawer
-          variant="permanent"
+          variant='permanent'
           sx={{
             display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': {
@@ -126,7 +130,7 @@ const DrawerComponent = (props) => {
         </Drawer>
       </Box>
       <Box
-        component="main"
+        component='main'
         sx={{
           flexGrow: 1,
           p: 3,
@@ -134,7 +138,7 @@ const DrawerComponent = (props) => {
         }}
       >
         <Toolbar />
-        <Visualizer />
+        {children}
       </Box>
     </Box>
   )

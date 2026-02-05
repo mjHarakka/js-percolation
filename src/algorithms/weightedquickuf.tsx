@@ -20,7 +20,6 @@ export class WeightedQuickUnionUF {
   }
 
   public connected(p: number, q: number) {
-    console.log(p, q)
     return this.find(p) === this.find(q)
   }
 
