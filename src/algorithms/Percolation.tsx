@@ -100,6 +100,7 @@ export const Percolation = (props: PercolationProps) => {
       }
     }
     return cells
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grid])
 
   const render = () => {

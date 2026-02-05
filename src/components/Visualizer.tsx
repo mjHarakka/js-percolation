@@ -12,7 +12,6 @@ import {
 import { Stack } from '@mui/system'
 import { useState, useRef } from 'react'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import RefreshIcon from '@mui/icons-material/Refresh'
 import InfoIcon from '@mui/icons-material/Info'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import GitHubIcon from '@mui/icons-material/GitHub'
@@ -159,18 +158,6 @@ const Visualizer = () => {
   const resetGrid = () => {
     if (isSimulating) return
     setGrid(initializeGrid(gridSize))
-    setResetKey((prev) => prev + 1)
-    setOpenCount(0)
-    setTrials(0)
-    setMeanThreshold(0)
-    setStddev(0)
-    thresholds.current = []
-  }
-
-  const changeGridSize = (size: number) => {
-    if (isSimulating) return
-    setGridSize(size)
-    setGrid(initializeGrid(size))
     setResetKey((prev) => prev + 1)
     setOpenCount(0)
     setTrials(0)
