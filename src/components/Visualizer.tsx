@@ -18,7 +18,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import './Visualizer.css'
 
 const Visualizer = () => {
-  const [gridSize, setGridSize] = useState(100)
+  const gridSize = 100
 
   const initializeGrid = (size: number) => {
     const grid = []
