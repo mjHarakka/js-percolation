@@ -1,26 +1,122 @@
-.node {
-  border: 1px solid rgb(221, 221, 221);
-  background: ghostwhite;
-  display: inline-block;
+.visualizer-container {
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.flex {
-  padding: 20px 0;
-  width: 400px;
+.control-card,
+.info-card {
+  max-width: 800px;
+  margin: 20px auto;
+  border-radius: 16px !important;
+  background: white !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+}
+
+.title {
+  color: #667eea !important;
+  font-weight: 700 !important;
+  text-align: center;
+}
+
+.button-group {
+  justify-content: center;
+  margin: 20px 0 !important;
+}
+
+.simulate-btn {
+  background: #667eea !important;
+  color: white !important;
+  padding: 10px 30px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.simulate-btn:hover {
+  background: #5568d3 !important;
+}
+
+.reset-btn {
+  border: 2px solid #667eea !important;
+  color: #667eea !important;
+  padding: 10px 30px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.reset-btn:hover {
+  background: rgba(102, 126, 234, 0.08) !important;
+}
+
+.stats-container {
   display: flex;
-  flex-direction: row;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
   flex-wrap: wrap;
-  align-items: stretch;
 }
 
-.open {
-  background: red;
+.stats-container .MuiChip-root {
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.connected {
-  background: orange;
+.grid-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 
-.full {
-  background: yellowgreen;
+.complexity-section {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #f5f7ff;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.complexity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.operation-chip {
+  background: #667eea !important;
+  color: white !important;
+  font-weight: 600 !important;
+  min-width: 100px;
+}
+
+.info-footer {
+  margin-top: 16px;
+  padding: 16px;
+  background: #f5f7ff;
+  border-radius: 8px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .visualizer-container {
+    padding: 10px;
+  }
+
+  .control-card,
+  .info-card {
+    margin: 15px auto;
+  }
+
+  .button-group {
+    flex-direction: column !important;
+  }
+
+  .complexity-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

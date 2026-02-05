@@ -1,14 +1,11 @@
 import CssBaseline from '@mui/material/CssBaseline'
-import DrawerComponent from './components/Drawer/Drawer'
-import { Outlet } from 'react-router-dom'
+import Visualizer from './components/Visualizer'
 
 const App = () => {
   return (
     <>
       <CssBaseline />
-      <DrawerComponent>
-        <Outlet />
-      </DrawerComponent>
+      <Visualizer />
     </>
   )
 }

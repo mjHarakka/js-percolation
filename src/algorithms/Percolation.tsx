@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './Percolation.css'
 import { WeightedQuickUnionUF } from './weightedquickuf'
 
@@ -8,6 +8,8 @@ interface PercolationProps {
     num: number
   }
   onReset?: () => void
+  onOpenSite?: (openFn: (row: number, col: number) => void) => void
+  onPercolationCheck?: (checkFn: () => boolean) => void
 }
 
 export const Percolation = (props: PercolationProps) => {
@@ -16,6 +18,16 @@ export const Percolation = (props: PercolationProps) => {
   const virtualTop = n * n
   const virtualBottom = n * n + 1
   const [UF, setUF] = useState(new WeightedQuickUnionUF(props.data.num))
+
+  // Expose open function to parent component
+  useEffect(() => {
+    if (props.onOpenSite) {
+      props.onOpenSite(open)
+    }
+    if (props.onPercolationCheck) {
+      props.onPercolationCheck(percolates)
+    }
+  }, [props.onOpenSite, props.onPercolationCheck])
 
   // Transforms 2-dimensional array to single dimension based on index
   const transform = (row: number, column: number) => {
@@ -74,7 +86,7 @@ export const Percolation = (props: PercolationProps) => {
     open(row, column)
   }
 
-  const nodeSize = 1000 / props.data.num
+  const isPercolating = percolates()
 
   const render = () => {
     return grid.map((row, rowIndex) => {
@@ -82,7 +94,6 @@ export const Percolation = (props: PercolationProps) => {
         if (!node) {
           return (
             <div
-              style={{ width: `${nodeSize}px`, height: `${nodeSize}px` }}
               className={`node`}
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
@@ -92,8 +103,7 @@ export const Percolation = (props: PercolationProps) => {
         if (isFull(rowIndex, nodeIndex)) {
           return (
             <div
-              style={{ width: nodeSize, height: nodeSize }}
-              className={'node full'}
+              className={isPercolating ? 'node percolated' : 'node full'}
               key={nodeIndex}
               onClick={() => handleClick(rowIndex, nodeIndex)}
             ></div>
@@ -101,7 +111,6 @@ export const Percolation = (props: PercolationProps) => {
         }
         return (
           <div
-            style={{ width: nodeSize, height: nodeSize }}
             className={'node connected'}
             key={nodeIndex}
             onClick={() => handleClick(rowIndex, nodeIndex)}
@@ -111,5 +120,9 @@ export const Percolation = (props: PercolationProps) => {
     })
   }
 
-  return <div className='flex'>{render()}</div>
+  return (
+    <div className='flex' style={{ gridTemplateColumns: `repeat(${n}, 1fr)` }}>
+      {render()}
+    </div>
+  )
 }
