@@ -381,10 +381,49 @@ const Visualizer = () => {
                 </Box>
               </Box>
 
+              <Box className='complexity-section'>
+                <Typography variant='subtitle1' fontWeight={600} gutterBottom>
+                  🚀 Frontend Optimizations
+                </Typography>
+                <Box component='ul' sx={{ margin: 0, paddingLeft: 2 }}>
+                  <li>
+                    <Typography variant='body2' color='text.secondary'>
+                      <strong>Memoized Cell States:</strong> Uses useMemo to
+                      cache which cells are "full" (connected to top).
+                      Calculated once per grid change instead of querying
+                      Union-Find 10,000 times per render
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant='body2' color='text.secondary'>
+                      <strong>Batched Visual Updates:</strong> Updates display
+                      every 50 sites during simulation instead of every single
+                      site, allowing React to keep up with rapid changes
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant='body2' color='text.secondary'>
+                      <strong>CSS-based Color Change:</strong> When percolation
+                      occurs, uses CSS selectors to turn 6000+ cells red
+                      instantly instead of re-rendering each element
+                      individually
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography variant='body2' color='text.secondary'>
+                      <strong>Zero Transitions:</strong> Disables CSS
+                      transitions during percolation to prevent browser lag from
+                      animating thousands of elements simultaneously
+                    </Typography>
+                  </li>
+                </Box>
+              </Box>
+
               <Box className='info-footer'>
                 <Typography variant='body2' color='text.secondary'>
-                  For a 10×10 grid (100 sites), you're looking at ~7 operations
-                  per union/find in the worst case!
+                  <strong>Result:</strong> Core algorithm stays O(log n), but
+                  frontend rendering improved from O(n² × log n × renders) to
+                  O(n² + renders) with instant visual updates!
                 </Typography>
               </Box>
             </Box>
